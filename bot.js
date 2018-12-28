@@ -60,7 +60,7 @@ client.on('message', async msg =>{
 	let command = msg.content.toLowerCase().split(" ")[0];
 	command = command.slice(prefix.length)
 
-    if(command === `ping`) {
+    if(command === `musicping`) {
     let embed = new Discord.RichEmbed()
     .setColor(3447003)
     .setTitle("Pong!!")
