@@ -82,7 +82,7 @@ client.on('message', async msg =>{
 	let command = msg.content.toLowerCase().split(" ")[0];
 	command = command.slice(prefix.length)
 
-    if(command === `avatar`){
+    if(command === `avatarrr`){
 	if(msg.channel.type === 'dm') return msg.channel.send("Nope Nope!! u can't use avatar command in DMs (:")
         let mentions = msg.mentions.members.first()
         if(!mentions) {
@@ -172,7 +172,7 @@ client.on('message', async msg => {
 					var videos = await youtube.searchVideos(searchString, 5);
 					let index = 0;
                     const embed1 = new Discord.RichEmbed()
-                    .setTitle(":mag_right:  YouTube Search Results :")
+                    .setTitle("قم باختيار الرقم المناسب من النتائج")
                     .setDescription(`
                     ${videos.map(video2 => `${++index}. **${video2.title}**`).join('\n')}`)
                     
@@ -189,7 +189,7 @@ client.on('message', async msg => {
 						});
 					} catch (err) {
 						console.error(err);
-						return msg.channel.send('No one respone a number!!');
+						return msg.channel.send('**لم تقم باختيار اي رقم**!');
                     }
                     
 					const videoIndex = parseInt(response.first().content);
@@ -198,7 +198,7 @@ client.on('message', async msg => {
 				} catch (err) {
 
 					console.error(err);
-					return msg.channel.send("I didn't find any results!");
+					return msg.channel.send("**لم يتم ايجاد اي نتيجة بحث!**");
 				}
 			}
 
@@ -212,15 +212,17 @@ client.on('message', async msg => {
         if (!serverQueue) return msg.channel.send("There is no Queue to skip!!");
 
 		serverQueue.connection.dispatcher.end('Ok, skipped!');
+		msg.channel.send(`ok skipped :ok_hand: , ${serverQueue.songs[0].title}`);
         return undefined;
         
 	} else if (command === `stop`) {
 
 		if (!msg.member.voiceChannel) return msg.channel.send("You Must be in a Voice channel to Run the Music commands!");
         if (!serverQueue) return msg.channel.send("There is no Queue to stop!!");
-        
+        		
 		serverQueue.songs = [];
 		serverQueue.connection.dispatcher.end('Ok, stopped & disconnected from your Voice channel');
+		msg.channel.send(`ok stopped :ok_hand: , ${serverQueue.songs[0].title}`);
         return undefined;
         
 	} else if (command === `vol`) {
@@ -237,9 +239,8 @@ client.on('message', async msg => {
 	} else if (command === `np`) {
 
 		if (!serverQueue) return msg.channel.send('There is no Queue!');
-		const embedNP = new Discord.RichEmbed()
-	    .setDescription(`Now playing **${serverQueue.songs[0].title}**`)
-        return msg.channel.sendEmbed(embedNP);
+		return msg.channel.send(`Now playing **${serverQueue.songs[0].title}**`)
+        
         
 	} else if (command === `queue`) {
 		
@@ -247,7 +248,6 @@ client.on('message', async msg => {
 		let index = 0;
 //	//	//
 		const embedqu = new Discord.RichEmbed()
-        .setTitle("The Queue Songs :")
         .setDescription(`
         ${serverQueue.songs.map(song => `${++index}. **${song.title}**`).join('\n')}
 **Now playing :** **${serverQueue.songs[0].title}**`)
